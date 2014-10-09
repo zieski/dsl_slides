@@ -1,18 +1,19 @@
-class AssignBusywork
+class AssignBusywork < CustomTask
   attr_reader :user_ids, :n_tasks
-  def self.perform(user_ids, n_tasks)
-    new(user_ids, n_tasks).perform
+
+  private
+
+  def init_params(opts)
+    @user_ids = opts.fetch(:user_ids, [nil] + User.pluck(:id))
+    @n_tasks = opts.fetch(:n_tasks, 5)
   end
 
-  def initialize(user_ids, n_tasks)
-    @user_ids, @n_tasks = user_ids, n_tasks
-  end
-
-  def perform
+  def run_task
     n_tasks.times do
+      user = User.find(user_ids.sample)
       Task.create({
         priority: Task::PRIORITIES.sample,
-        user_id: user_ids.sample,
+        user_id: user.id,
         name: "#{common_words.sample} #{common_words.sample}",
         description: lorem_ipsum
       })

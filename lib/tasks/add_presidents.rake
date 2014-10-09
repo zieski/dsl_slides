@@ -1,3 +1,5 @@
+require "#{Rails.root}/app/tasks/custom_task"
+
 task :add_presidents => :environment do |t|
   User.create(name: 'George Washington', age: 1789-1732)
   User.create(name: 'John Adams', age: 1797-1735)
@@ -6,8 +8,5 @@ task :add_presidents => :environment do |t|
   User.create(name: 'James Monroe', age: 1817-1758)
 end
 
-task :assign_busywork => :environment do |t|
-  assigner = AssignBusywork.new([nil] + User.pluck(:id), 10)
-  assigner.perform
-end
+custom_task :assign_busywork, n_tasks: 10
 
