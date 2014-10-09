@@ -10,5 +10,18 @@
   <%= @user.age %>
 </p>
 
+<% if @user.tasks.exists? %>
+  <strong>Tasks:</strong>
+  <ul>
+    <% @user.tasks.each do |task| %>
+      <li><%= task.priority.titleize %></li>
+      <li><%= link_to task.name.titleize, task %></li>
+      <li><%= task.short_description %></li>
+      <li>&nbsp;</li>
+    <% end %>
+  </ul>
+<% end %>
+
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
+
