@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :assign_busywork]
 
   # GET /users
   # GET /users.json
@@ -59,6 +59,11 @@ class UsersController < ApplicationController
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def assign_busywork
+    AssignBusywork.new([@user.id], 5).perform
+    redirect_to action: 'show'
   end
 
   private

@@ -1,5 +1,9 @@
 class AssignBusywork
   attr_reader :user_ids, :n_tasks
+  def self.perform(user_ids, n_tasks)
+    new(user_ids, n_tasks).perform
+  end
+
   def initialize(user_ids, n_tasks)
     @user_ids, @n_tasks = user_ids, n_tasks
   end

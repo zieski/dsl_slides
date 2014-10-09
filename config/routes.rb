@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   resources :tasks
 
-  resources :users
+  resources :users do
+    member do
+      get :assign_busywork
+    end
+  end
   root 'users#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
